@@ -1,13 +1,13 @@
 \documentclass[a4paper,10pt]{article}
 
-\usepackage[top=2cm, bottom=3cm, left=3cm, right=3cm]{geometry}
-\usepackage[hidelinks]{hyperref}
+\usepackage[top=1.65cm, bottom=1.65cm, left=1.5cm, right=1.5cm]{geometry}
+\usepackage{hyperref}
 \usepackage{titlesec}
 \usepackage{xcolor}
 \usepackage{fontspec}
 \usepackage{xifthen}
 \usepackage{etoolbox}
-\usepackage{array}
+\usepackage{ragged2e}
 
 \definecolor{primary}{HTML}{2C2C2C} 
 \definecolor{heading}{HTML}{5D5D5D}
@@ -25,77 +25,118 @@
 \newcommand*{\employerstyle}[1]{\demibold[Color=subheading]\textsc{#1}\normalfont}
 \newcommand*{\locationstyle}[1]{\medium\mdseries\emph{#1}\normalfont}
 
+\newcommand*{\university}[1]{\large\medium[Color=heading]\selectfont{\textsc{#1}}\normalfont}
+
 \newcommand*{\firstnamestyle}[1]{\medium\Huge\selectfont{#1}\normalfont}
 \newcommand*{\lastnamestyle}[1]{\demibold\Huge\selectfont{\textsc{#1}}\normalfont}
 
-\newcommand{\job}[3]{\jobstyle{#1} at \employerstyle{#2} \hfill \locationstyle{#3}}
-\newcommand{\experience}[6]{
-  \textsc{#1} & \job{#3}{#4}{#5} \\
-  \textsc{#2} & #6 \\
-  \multicolumn{2}{c}{\vspace{5pt}} \\
-}
-
-\titleformat{\section}{\Large\scshape\raggedright}{}{0em}{}[\titlerule]
-\titlespacing{\section}{0pt}{18pt}{8pt}
+\newcommand*{\datestyle}[1]{\textsc{#1}}
 
 \newlength{\tabularwidth}
 \setlength{\tabularwidth}{\textwidth - 2\columnsep}
+
+\newlength{\leftcolumnlength}
+\setlength{\leftcolumnlength}{2.5cm}
+
+\newlength{\rightcolumnlength}
+\setlength{\rightcolumnlength}{\dimexpr(\tabularwidth - \leftcolumnlength)\relax}
+
+\newtoggle{lastexp}
+
+\newenvironment{resumeitemize}{
+  \begin{list}{\textendash} {
+    \setlength{\leftmargin}{1em}
+    \setlength{\parsep}{0em}
+    \setlength{\itemsep}{2pt}
+  }
+}{
+  \end{list}
+}
+
+\newcommand{\job}[3]{
+  \jobstyle{#1} at \employerstyle{#2} \hfill \locationstyle{#3}
+}
+
+\newcommand{\experience}[6]{
+  \begin{tabular}[t]{p{\leftcolumnlength}|p{\rightcolumnlength}}
+    \RaggedLeft{\datestyle{#1}} & \job{#3}{#4}{#5} \\
+    \RaggedLeft{\datestyle{#2}} & \vspace{-5pt} \begin{minipage}[t]{\rightcolumnlength}
+                                    \begin{resumeitemize} #6 \end{resumeitemize}
+                                  \end{minipage} \\
+    \iftoggle{lastexp}{}{\multicolumn{2}{c}{}}
+  \end{tabular}
+}
+
+\newcommand{\education}[4] {
+  \begin{tabular}[t]{p{\leftcolumnlength}|p{\rightcolumnlength}}
+    \RaggedLeft{\datestyle{#1}} & \university{#2}, \locationstyle{#3} \\
+    {} & \emph{#4}
+  \end{tabular}
+}
+
+\titleformat{\section}{\Large\scshape \RaggedRight}{}{0em}{}[\titlerule]
+\titlespacing{\section}{0pt}{18pt}{8pt}
 
 \begin{document}
   \centering{
     \par{
       \firstnamestyle{Dave} \lastnamestyle{Walker}
     }
-    \\
-    \vspace{10pt}
-    \href{tel:609-933-5284}{609-933-5284} | \href{mailto:me@davewalker.dev}{me@davewalker.dev} | {Lakewood, CO} | \href{http://github.com/bp1222}{github.com/bp1222}
-    \\
-    \vspace{20pt}
+    \hfill
+    \href{tel:609-933-5284}{609-933-5284} | \href{mailto:me@davewalker.dev}{me@davewalker.dev} | Lakewood, CO | \href{http://github.com/bp1222}{github.com/bp1222}
+    \vfill
   }
-  
-\section{Summary}
-  \begin{tabular}{p{\tabularwidth}}
-    Experienced Software Engineering Manager with an extensive set of skills,
-    abstract thought of complex problems, and ability to adapt to new challenges.
-    Experiences include managing and growing development teams, porting core
-    application software, and developing communication protocols.
-  \end{tabular}
 
-\section{Education}
-  \begin{tabular}{>{\hfill}p{.17\tabularwidth}|p{.83\tabularwidth}}
-    \textsc{May} 2008 & \large{B.Sc in \textsc{Applied Networking and Systems Administration}} \\
-    {} & \emph{Rochester Institute of Technology, Rochester, NY} \\
-  \end{tabular}
+
+\section{Professional Summary}
+    \RaggedRight{
+      Proven \emph{Software Engineering Manager} applying results driven and customer focus to the entire software development lifecycle.
+      An effective leader enabling core architectural and product teams to deliver software customers love.
+      Well established leader specializing in project management while leading cross-functional teams in a
+        fast-paced environment. 
+      I have a passionate drive for establishing quality software practices, growing development teams,
+        and engaging productively with product direction to ensure delivery of exceptional software.
+    }
 
 \section{Experience}
-  \begin{tabular}{>{\hfill}p{.17\tabularwidth}|p{.83\tabularwidth}}
     \experience{\emph{\textulc{Current}}}{February 2019}{Engineering Manager}{Workiva}{Denver, CO}{
-      Ensure adequate developer resources for road mapped feature development.
-      Implement and evaluate team performance through scrum methodologies.
-      Provide career guidance, and structure to development team.
+      \item Manage team responsible for architecture and design of foundational experiences of the Workiva Platform (\href{https://www.workiva.com/platform}{workiva.com/platform}).
+      \item Provide career development to team of senior and principal engineers.
+      \item Compiled KPI's for upper management that highlight non visible teams deliverables.
+      \item Coordinate product direction, and communicate with stakeholders across engineering organization.
     }
 
     \experience{February 2019}{July 2018}{Senior Software Engineer}{Workiva}{Denver, CO}{
-      Provide technical guidance to newer developers on software architecture.
-      With team, developed annotation framework for next generation WDesk product.
-      Work with cross-organization development teams to ensure proper integration points.
+      \item Provided technical guidance, and mentoring, to newer developers on software architecture and design patterns.
+      \item Developed annotation framework, including file attachments for \href{https://www.workiva.com/platform}{Workiva Platform}
+      \item Expanded functionality of document packaging for the SEC Filing experience.
+      \item Worked with cross-organization development teams to ensure effective integration.
     }
 
     \experience{June 2018}{February 2017}{Senior Software Engineer}{nio Innovation}{Broomfield, CO}{
-      Creator of Pubkeeper (\href{http://niolabs.com/product/pubkeeper}{niolabs.com/product/pubkeeper})
-      a patent-abandoned abstract communications platform that enables disparate devices to operate in
-      a pub/sub environment. Worked with converting cloud infrastructure from AWS to GoogleCloud and
-      Kubernetes Port of core IoT product from Python to C.  Project goal is a platform for embedded
-      deployments via MbedOS and other RTOS.
+      \item Creator of Pubkeeper (\href{http://niolabs.com/product/pubkeeper}{niolabs.com/product/pubkeeper}) a patent-abandoned communications platform that enables disparate devices to operate in a pub/sub environment.
+      \item Ported core IoT product from Python to C, with goal to be a platform for embedded deployments via MbedOS and other RTOS.
+      \item Converted cloud infrastructure between Cloud Service provders, abstracting implementation with Kubernetes, Helm, and Vault.
     }
 
-    \experience{February 2017}{July 2014}{Software Engineering Manager}{Symplicity Corp}{Arlington, VA}{
-      Creator and Lead Developer for Residence (\href{http://symplicity.com/residence}{symplicity.com/residence}).
-      Provide strategic decisions that drive product forward into new market opportunities.
-      Engage with clients to understand and learn requirements to plan future roadmap.
-      Keep product and development team on-time, and within feature scope.
-      Developed a language that allows clients abilities to code certain parts of the application.
+    \global\settoggle{lastexp}{true}
+    \experience{February 2017}{June 2008}{Software Engineering Manager/Senior Engineer}{Symplicity Corp}{Arlington, VA}{
+      \item Creator and Lead Developer for Residence (\href{http://symplicity.com/residence}{symplicity.com/residence}).
+      \item Provide strategic decisions that drive product forward into new market opportunities.
+      \item Engage with clients to understand and learn requirements to plan future roadmap.
+      \item Keep product and development team on-time, and within feature scope.
+      \item Managed team of developers to ensure focus on product direction and delivery.
+      \item Developed a language that gives clients abilities to code certain parts of the application.
     }
+
+\section{Education}
+  \education{May 2008}{Rochester Institute of Technology}{Rochester, NY}{B.Sc of Applied Networking and Systems Administration}
+  
+\section{Skills}
+  \begin{tabular}{p{\tabularwidth}}
+    \medium{Management:}\normalfont ~ Project Management, Career Guidance \& Development, Agile \& Kanban Processes \\
+    \medium{Languages:}\normalfont ~ C, PHP, Golang \\
+    \medium{Frameworks:}\normalfont ~ React
   \end{tabular}
-
+  
 \end{document}
