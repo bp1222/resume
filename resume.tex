@@ -1,6 +1,6 @@
 \documentclass[a4paper,10pt]{article}
 
-\usepackage[top=1.65cm, bottom=1.65cm, left=1.5cm, right=1.5cm]{geometry}
+\usepackage[top=1.5cm, bottom=1.5cm, left=1.5cm, right=1.5cm]{geometry}
 \usepackage{hyperref}
 \usepackage{titlesec}
 \usepackage{xcolor}
@@ -47,7 +47,7 @@
   \begin{list}{\textendash} {
     \setlength{\leftmargin}{1em}
     \setlength{\parsep}{0em}
-    \setlength{\itemsep}{2pt}
+    \setlength{\itemsep}{1pt}
   }
 }{
   \end{list}
@@ -75,7 +75,9 @@
 }
 
 \titleformat{\section}{\Large\scshape \RaggedRight}{}{0em}{}[\titlerule]
-\titlespacing{\section}{0pt}{18pt}{8pt}
+\titlespacing{\section}{0pt}{15pt}{8pt}
+\hyphenpenalty=1000
+
 
 \begin{document}
   \centering{
@@ -83,60 +85,59 @@
       \firstnamestyle{Dave} \lastnamestyle{Walker}
     }
     \hfill
-    \href{tel:609-933-5284}{609-933-5284} | \href{mailto:me@davewalker.dev}{me@davewalker.dev} | Lakewood, CO | \href{http://github.com/bp1222}{github.com/bp1222}
-    \vfill
+    \href{tel:609-933-5284}{609-933-5284} | \href{mailto:me@davewalker.dev}{me@davewalker.dev} | Lakewood, CO
   }
 
 
 \section{Professional Summary}
     \RaggedRight{
-      Proven \emph{Software Engineering Manager} applying results driven and customer focus to the entire software development lifecycle.
-      An effective leader enabling core architectural and product teams to deliver software customers love.
-      Well established leader specializing in project management while leading cross-functional teams in a
+      Proven \emph{Software Engineering Manager} applying results-oriented and customer focus to the entire software development lifecycle.
+      Skilled in enabling core architectural and product teams to deliver software customers love.
+      Established leader specializing in project management leading cross-functional teams in a
         fast-paced environment. 
-      I have a passionate drive for establishing quality software practices, growing development teams,
-        and engaging productively with product direction to ensure delivery of exceptional software.
+      Passionate drive for establishing high quality software practices, growing development teams,
+        and product direction to ensure delivery of exceptional software.
     }
 
 \section{Experience}
     \experience{\emph{\textulc{Current}}}{February 2019}{Engineering Manager}{Workiva}{Denver, CO}{
-      \item Manage team responsible for architecture and design of foundational experiences of the Workiva Platform (\href{https://www.workiva.com/platform}{workiva.com/platform}).
-      \item Provide career development to team of senior and principal engineers.
-      \item Compiled KPI's for upper management that highlight non visible teams deliverables.
-      \item Coordinate product direction, and communicate with stakeholders across engineering organization.
+      \item Led team responsible for core architecture and design of the foundation experiences of the Workiva Platform (\href{https://www.workiva.com/platform}{workiva.com/platform}).
+      \item Successfully delivered platform API, enabling partners and internal teams abilities to extend the core product.
+      \item Foster a highly performant and collaborative team culture, promoting knowledge sharing and skill development.
+      \item Mentor and coach team members, fostering personal and professional growth.
+      \item Collaborate with cross-functional teams to develop and define project scope, deliverables, and timelines.
     }
 
     \experience{February 2019}{July 2018}{Senior Software Engineer}{Workiva}{Denver, CO}{
-      \item Provided technical guidance, and mentoring, to newer developers on software architecture and design patterns.
-      \item Developed annotation framework, including file attachments for \href{https://www.workiva.com/platform}{Workiva Platform}
+      \item Provided technical guidance and mentoring to new developers.
+      \item Developed annotation framework, including next generation financial evidence attachment feature.
       \item Expanded functionality of document packaging for the SEC Filing experience.
-      \item Worked with cross-organization development teams to ensure effective integration.
+      \item Worked with cross-organization development teams to ensure effective delivery of projects.
     }
 
     \experience{June 2018}{February 2017}{Senior Software Engineer}{nio Innovation}{Broomfield, CO}{
       \item Creator of Pubkeeper (\href{http://niolabs.com/product/pubkeeper}{niolabs.com/product/pubkeeper}) a patent-abandoned communications platform that enables disparate devices to operate in a pub/sub environment.
-      \item Ported core IoT product from Python to C, with goal to be a platform for embedded deployments via MbedOS and other RTOS.
+      \item Ported core IoT product from Python to C, with a goal to establish a platform for embedded deployments via MbedOS and other RTOS.
       \item Converted cloud infrastructure between Cloud Service provders, abstracting implementation with Kubernetes, Helm, and Vault.
     }
 
     \global\settoggle{lastexp}{true}
     \experience{February 2017}{June 2008}{Software Engineering Manager/Senior Engineer}{Symplicity Corp}{Arlington, VA}{
       \item Creator and Lead Developer for Residence (\href{http://symplicity.com/residence}{symplicity.com/residence}).
-      \item Provide strategic decisions that drive product forward into new market opportunities.
+      \item Provide strategic decisions with executive management that set product direction.
       \item Engage with clients to understand and learn requirements to plan future roadmap.
-      \item Keep product and development team on-time, and within feature scope.
+      \item Keep product and development team on-time, and within budget.
       \item Managed team of developers to ensure focus on product direction and delivery.
       \item Developed a language that gives clients abilities to code certain parts of the application.
     }
 
 \section{Education}
-  \education{May 2008}{Rochester Institute of Technology}{Rochester, NY}{B.Sc of Applied Networking and Systems Administration}
+  \education{May 2008}{Rochester Institute of Technology}{Rochester, NY}{B.Sc of Applied Networking and Systems Administration}\
   
 \section{Skills}
   \begin{tabular}{p{\tabularwidth}}
     \medium{Management:}\normalfont ~ Project Management, Career Guidance \& Development, Agile \& Kanban Processes \\
-    \medium{Languages:}\normalfont ~ C, PHP, Golang \\
-    \medium{Frameworks:}\normalfont ~ React
+    \medium{Languages:}\normalfont ~ Golang, Dart, C, PHP
   \end{tabular}
   
 \end{document}
