@@ -1,5 +1,8 @@
-\documentclass[a4paper,10pt]{article}
+\documentclass[a4paper,11pt]{article}
 
+%
+% Package Imports
+%
 \usepackage[top=1.5cm, bottom=1.5cm, left=1.5cm, right=1.5cm]{geometry}
 \usepackage{hyperref}
 \usepackage{titlesec}
@@ -8,136 +11,171 @@
 \usepackage{xifthen}
 \usepackage{etoolbox}
 \usepackage{ragged2e}
+\usepackage{tabularx}
+\usepackage{enumitem}
 
+\pagestyle{empty}
+
+%
+% Colors
+%
 \definecolor{primary}{HTML}{2C2C2C} 
 \definecolor{heading}{HTML}{5D5D5D}
 \definecolor{subheading}{HTML}{6A6A6A}
+\definecolor{accent}{HTML}{263238}
 
+%
+% Fonts / Styles
+%
 \setmainfont[Color=primary]{Avenir Next}
-
-\pagestyle{empty}
+\titleformat{\section}{\Large\scshape \RaggedRight}{}{0em}{}[\titlerule]
+\titlespacing{\section}{0pt}{15pt}{8pt}
 
 \newcommand*{\demibold}{\fontspec[Color=heading]{Avenir Next Demi Bold}}
 \newcommand*{\medium}{\fontspec[Color=heading]{Avenir Next Medium}}
 \newcommand*{\ultralight}{\fontspec[Color=heading]{Avenir Next Ultra Light}}
 
-\newcommand*{\jobstyle}[1]{\demibold[Color=subheading]\fontsize{10.5pt}{10pt}\selectfont{#1}\normalfont}
-\newcommand*{\employerstyle}[1]{\demibold[Color=subheading]\textsc{#1}\normalfont}
+%
+% Helper Style Commands
+%
+\newcommand*{\employerstyle}[1]{\large\demibold[Color=heading]\selectfont{#1}\normalfont}
+\newcommand*{\datestyle}[1]{\medium\mdseries{#1}\normalfont}
+\newcommand*{\jobstyle}[1]{\demibold[Color=subheading]\fontsize{10.5pt}{11pt}\selectfont{#1}\normalfont}
 \newcommand*{\locationstyle}[1]{\medium\mdseries\emph{#1}\normalfont}
 
-\newcommand*{\university}[1]{\large\medium[Color=heading]\selectfont{\textsc{#1}}\normalfont}
+\newcommand*{\skillstyle}[1]{\fontsize{11pt}{11pt}\demibold{#1}\normalfont}
 
 \newcommand*{\firstnamestyle}[1]{\medium\Huge\selectfont{#1}\normalfont}
 \newcommand*{\lastnamestyle}[1]{\demibold\Huge\selectfont{\textsc{#1}}\normalfont}
 
-\newcommand*{\datestyle}[1]{\textsc{#1}}
 
-\newlength{\tabularwidth}
-\setlength{\tabularwidth}{\textwidth - 2\columnsep}
+%
+% Helpers
+%
 
-\newlength{\leftcolumnlength}
-\setlength{\leftcolumnlength}{2.5cm}
+% Entry start and end, for spacing
+\newcommand{\resumeEntryStart}{\begin{itemize}[leftmargin=1.5mm]}
+\newcommand{\resumeEntryEnd}{\end{itemize}\vspace{-1pt}}
 
-\newlength{\rightcolumnlength}
-\setlength{\rightcolumnlength}{\dimexpr(\tabularwidth - \leftcolumnlength)\relax}
+% Itemized list for the bullet points under an entry, if necessary
+\newcommand{\resumeItemListStart}{\begin{itemize}[leftmargin=4.5mm]}
+\newcommand{\resumeItemListEnd}{\end{itemize}}
 
-\newtoggle{lastexp}
-
-\newenvironment{resumeitemize}{
-  \begin{list}{\textendash} {
-    \setlength{\leftmargin}{1em}
-    \setlength{\parsep}{0em}
-    \setlength{\itemsep}{1pt}
+% Resume item
+\renewcommand{\labelitemii}{\textendash}
+\newcommand{\resumeItem}[1]{
+  \item\small{
+    {#1 \vspace{-2pt}}
   }
-}{
-  \end{list}
 }
 
-\newcommand{\job}[3]{
-  \jobstyle{#1} at \employerstyle{#2} \hfill \locationstyle{#3}
+\newcommand{\resumeEntry}[4]{
+  \vspace{-1pt}\item[]
+    \begin{tabularx}{\textwidth - 1.5mm}{X@{\hspace{60pt}}r}
+      \employerstyle{#1} & \datestyle{#2} \\
+      \jobstyle{#3} & \locationstyle{#4} \\
+    \end{tabularx}\vspace{-6pt}
 }
 
-\newcommand{\experience}[6]{
-  \begin{tabular}[t]{p{\leftcolumnlength}|p{\rightcolumnlength}}
-    \RaggedLeft{\datestyle{#1}} & \job{#3}{#4}{#5} \\
-    \RaggedLeft{\datestyle{#2}} & \vspace{-5pt} \begin{minipage}[t]{\rightcolumnlength}
-                                    \begin{resumeitemize} #6 \end{resumeitemize}
-                                  \end{minipage} \\
-    \iftoggle{lastexp}{}{\multicolumn{2}{c}{}}
-  \end{tabular}
+\newcommand{\resumeEntrySkill}[2]{
+  \item[]\small{
+    \skillstyle{#1}: {#2\vspace{-6pt}}
+  }
 }
 
-\newcommand{\education}[4] {
-  \begin{tabular}[t]{p{\leftcolumnlength}|p{\rightcolumnlength}}
-    \RaggedLeft{\datestyle{#1}} & \university{#2}, \locationstyle{#3} \\
-    {} & \emph{#4}
-  \end{tabular}
-}
-
-\titleformat{\section}{\Large\scshape \RaggedRight}{}{0em}{}[\titlerule]
-\titlespacing{\section}{0pt}{15pt}{8pt}
-\hyphenpenalty=1000
-
-
-\begin{document}
-  \centering{
-    \par{
-      \firstnamestyle{Dave} \lastnamestyle{Walker}
+% Header
+\newcommand{\header}[3]{
+  \begin{tabularx}{.95\textwidth}{Xr}
+    {
+      \begin{tabular}[b]{l}
+        \firstnamestyle{Dave} \lastnamestyle{Walker}
+      \end{tabular}
+    } & {
+      \begin{tabular}[c]{r@{\hspace{1.5em}}}
+        {\small#1} \\
+        {\small#2} \\
+        {\small#3}
+      \end{tabular}
     }
-    \hfill
-    \href{tel:609-933-5284}{609-933-5284} | \href{mailto:me@davewalker.dev}{me@davewalker.dev} | Lakewood, CO
-  }
+  \end{tabularx}
+}
 
+
+%
+% Document
+%
+\begin{document}
+  \header{me@davewalker.dev}{609-933-5284}{Lakewood, Colorado}
 
 \section{Professional Summary}
-    \RaggedRight{
-      Proven \emph{Software Engineering Manager} applying results-oriented and customer focus to the entire software development lifecycle.
-      Skilled in enabling core architectural and product teams to deliver software customers love.
-      Established leader specializing in project management leading cross-functional teams in a
-        fast-paced environment. 
-      Passionate drive for establishing high quality software practices, growing development teams,
-        and product direction to ensure delivery of exceptional software.
+  \RaggedRight{
+    Proven \emph{Software Engineering Manager} applying results-oriented and customer focus to the entire software development lifecycle.
+    Skilled in enabling core architectural and product teams to deliver software customers love.
+    Established leader specializing in project management leading cross-functional teams in a fast-paced environment. 
+      Passionate drive for establishing high quality software practices, growing development teams, and product direction to ensure delivery of exceptional software.
     }
 
 \section{Experience}
-    \experience{\emph{\textulc{Current}}}{February 2019}{Engineering Manager}{Workiva}{Denver, CO}{
-      \item Led team responsible for core architecture and design of the foundation experiences of the Workiva Platform (\href{https://www.workiva.com/platform}{workiva.com/platform}).
-      \item Successfully delivered platform API, enabling partners and internal teams abilities to extend the core product.
-      \item Foster a highly performant and collaborative team culture, promoting knowledge sharing and skill development.
-      \item Mentor and coach team members, fostering personal and professional growth.
-      \item Collaborate with cross-functional teams to develop and define project scope, deliverables, and timelines.
-    }
+  \resumeEntryStart
+    \resumeEntry
+      {Workiva}{May 2013 \textemdash ~Present}
+      {Software Engineering Manager}{Denver, Colorado}
+    \resumeItemListStart
+      \resumeItem {Led team responsible for core architecture and design of the foundation experiences of the Workiva Platform (\href{https://www.workiva.com/platform}{workiva.com/platform}).}
+      \resumeItem {Successfully delivered platform API, enabling partners and internal teams to extend the core product.}
+      \resumeItem {Foster a highly performant and collaborative culture, promoting knowledge sharing and skill development.}
+      \resumeItem {Mentor and coach team members, fostering personal and professional growth.}
+      \resumeItem {Collaborate with cross-functional teams to develop and define project scope, deliverables, and timelines.}
+    \resumeItemListEnd
+  \resumeEntryEnd
 
-    \experience{February 2019}{July 2018}{Senior Software Engineer}{Workiva}{Denver, CO}{
-      \item Provided technical guidance and mentoring to new developers.
-      \item Developed annotation framework, including next generation financial evidence attachment feature.
-      \item Expanded functionality of document packaging for the SEC Filing experience.
-      \item Worked with cross-organization development teams to ensure effective delivery of projects.
-    }
+  \resumeEntryStart
+    \resumeEntry
+      {Workiva}{July 2018 \textemdash ~February 2019}
+      {Senior Software Engineer}{Denver, Colorado}
+    \resumeItemListStart
+      \resumeItem {Provided technical guidance and mentoring to new developers.}
+      \resumeItem {Developed annotation framework, including next generation financial evidence attachment feature.}
+      \resumeItem {Expanded functionality of document packaging for the SEC Filing experience.}
+      \resumeItem {Worked with cross-organization development teams to ensure effective delivery of projects.}
+    \resumeItemListEnd
+  \resumeEntryEnd
 
-    \experience{June 2018}{February 2017}{Senior Software Engineer}{nio Innovation}{Broomfield, CO}{
-      \item Creator of Pubkeeper (\href{http://niolabs.com/product/pubkeeper}{niolabs.com/product/pubkeeper}) a patent-abandoned communications platform that enables disparate devices to operate in a pub/sub environment.
-      \item Ported core IoT product from Python to C, with a goal to establish a platform for embedded deployments via MbedOS and other RTOS.
-      \item Converted cloud infrastructure between Cloud Service provders, abstracting implementation with Kubernetes, Helm, and Vault.
-    }
-
-    \global\settoggle{lastexp}{true}
-    \experience{February 2017}{June 2008}{Software Engineering Manager/Senior Engineer}{Symplicity Corp}{Arlington, VA}{
-      \item Creator and Lead Developer for Residence (\href{http://symplicity.com/residence}{symplicity.com/residence}).
-      \item Provide strategic decisions with executive management that set product direction.
-      \item Engage with clients to understand and learn requirements to plan future roadmap.
-      \item Keep product and development team on-time, and within budget.
-      \item Managed team of developers to ensure focus on product direction and delivery.
-      \item Developed a language that gives clients abilities to code certain parts of the application.
-    }
-
+  \resumeEntryStart
+    \resumeEntry
+      {nio Innovation, LLC}{February 2017 \textemdash ~June 2018}
+      {Senior Software Engineer}{Broomfield, Colorado}
+    \resumeItemListStart
+      \resumeItem {Creator of Pubkeeper (\href{http://niolabs.com/product/pubkeeper}{niolabs.com/product/pubkeeper}) a patent-abandoned communications platform that enables disparate devices to operate in a pub/sub environment.}
+      \resumeItem { Ported core IoT product from Python to C, with a goal to establish a platform for
+embedded deployments via MbedOS and other RTOS.}
+      \resumeItem {Converted cloud infrastructure between Cloud Service providers, abstracting implementation with Kubernetes, Helm, and Vault.}
+    \resumeItemListEnd
+  \resumeEntryEnd
+  
+  \resumeEntryStart
+    \resumeEntry
+      {Symplicity}{June 2012 \textemdash ~February 2017}
+      {Software Engineering Manager}{Arlington, Virginia}
+    \resumeItemListStart
+      \resumeItem {Initial creator and lead for Residence (\href{http://symplicity.com/residence}{symplicity.com/residence}).}
+      \resumeItem {Provide strategic decisions with executive management that set product direction.}
+      \resumeItem {Engage with clients to understand and learn requirements to plan future roadmap.}
+      \resumeItem {Keep product and development team on-time, and within budget.}
+      \resumeItem {Managed team of developers to ensure focus on product direction and delivery.}
+    \resumeItemListEnd
+  \resumeEntryEnd
 \section{Education}
-  \education{May 2008}{Rochester Institute of Technology}{Rochester, NY}{B.Sc of Applied Networking and Systems Administration}\
+  \resumeEntryStart
+    \resumeEntry
+    	{Rochester Institute of Technology}{May 2008}
+    	{B.Sc Applied Networking and Systems Administration}{Rochester, NY}
+   \resumeEntryEnd
   
 \section{Skills}
-  \begin{tabular}{p{\tabularwidth}}
-    \medium{Management:}\normalfont ~ Project Management, Career Guidance \& Development, Agile \& Kanban Processes \\
-    \medium{Languages:}\normalfont ~ Golang, Dart, C, PHP
-  \end{tabular}
+  \resumeEntryStart
+    \resumeEntrySkill{Management}{Project Management, Career Guidance \& Development, Agile \& Kanban Processes}
+    \resumeEntrySkill{Languages}{Golang, Dart, C, PHP}
+  \resumeEntryEnd
   
 \end{document}
